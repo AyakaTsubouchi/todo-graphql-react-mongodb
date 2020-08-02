@@ -1,25 +1,31 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import React from "react";
+import { render } from "react-dom";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { ThemeProvider, CSSReset } from "@chakra-ui/core";
+
+import AddTodo from "./AddTodo";
+import Todos from "./Todos";
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000',
-  cache: new InMemoryCache()
+  uri: "http://localhost:4000",
+  cache: new InMemoryCache(),
 });
 
-ReactDOM.render(
-  <React.StrictMode>
+function App({ children }) {
+  return (
     <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+      <ThemeProvider>
+        <CSSReset />
+        {children}
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+        <div>
+          <h2>Todo List using React,GraphQL,MongoDB</h2>
+          <AddTodo />
+          <Todos />
+        </div>
+      </ThemeProvider>
+    </ApolloProvider>
+  );
+}
+
+render(<App />, document.getElementById("root"));

@@ -2,7 +2,7 @@ import React from "react";
 
 import { useMutation, gql } from "@apollo/client";
 import { GET_TODOS, ADD_TODO } from "./queries/todoQueries";
-import { Button } from "@chakra-ui/core";
+import { Button, Input, Flex } from "@chakra-ui/core";
 function AddTodo() {
   let input;
 
@@ -35,16 +35,22 @@ function AddTodo() {
   };
 
   return (
-    <div>
-      <form onSubmit={formSubmit}>
-        <input
+    <>
+      {" "}
+      <Flex
+        width="full"
+        align="center"
+        justifyContent="center"
+        mb="30px"
+        mt="30px">
+        <Input
           ref={(node) => {
             input = node;
           }}
         />
         <Button onClick={formSubmit}>Add Todo</Button>
-      </form>
-    </div>
+      </Flex>
+    </>
   );
 }
 

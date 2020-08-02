@@ -16,6 +16,8 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Flex,
+  Text,
 } from "@chakra-ui/core";
 
 function Todos() {
@@ -44,12 +46,16 @@ function Todos() {
 
     return (
       <div key={id}>
-        <p>{contents}</p>
+        <Flex>
+          <Text w="80%" borderWidth={1}>
+            {contents}
+          </Text>
 
-        <Button onClick={(e) => deleteTodo({ variables: { id } })}>
-          delete
-        </Button>
-        <Button onClick={onOpen}>Edit</Button>
+          <Button onClick={(e) => deleteTodo({ variables: { id } })}>
+            delete
+          </Button>
+          <Button onClick={onOpen}>Edit</Button>
+        </Flex>
         <Modal
           initialFocusRef={initialRef}
           finalFocusRef={finalRef}

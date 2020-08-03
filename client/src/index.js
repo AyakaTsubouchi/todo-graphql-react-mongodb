@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "react-dom";
+import ReactDOM from "react-dom";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import {
   ThemeProvider,
@@ -14,41 +14,27 @@ import {
   Button,
 } from "@chakra-ui/core";
 
-import AddTodo from "./AddTodo";
-import Todos from "./Todos";
-import ThemeToggler from "./style/ThemeToggler";
+import App from "./App";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000",
   cache: new InMemoryCache(),
 });
 
-function App() {
-  return (
+// function index() {
+//   return (
+//     <ApolloProvider client={client}>
+// <App/>
+//     </ApolloProvider>
+//   );
+// }
+
+// render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <React.StrictMode>
     <ApolloProvider client={client}>
-      <ThemeProvider>
-        <ColorModeProvider>
-          <CSSReset />
-          <ThemeToggler />
-          <Flex width="full" align="center" justifyContent="center">
-            <Box
-              p={8}
-              maxWidth="600px"
-              borderWidth={1}
-              borderRadius={8}
-              boxShadow="lg">
-              <Box textAlign="center">
-                <Heading>Todo List </Heading>
-
-                <AddTodo />
-                <Todos />
-              </Box>
-            </Box>
-          </Flex>
-        </ColorModeProvider>
-      </ThemeProvider>
+      <App />
     </ApolloProvider>
-  );
-}
-
-render(<App />, document.getElementById("root"));
+  </React.StrictMode>,
+  document.getElementById("root")
+);

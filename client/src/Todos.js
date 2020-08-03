@@ -18,6 +18,7 @@ import {
   Input,
   Flex,
   Text,
+  Icon,
 } from "@chakra-ui/core";
 
 function Todos() {
@@ -30,7 +31,7 @@ function Todos() {
     refetchQueries: [{ query: GET_TODOS }],
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const [updateId, setUpdateId] = useState(null);
   const initialRef = React.useRef();
   const finalRef = React.useRef();
 
@@ -50,12 +51,27 @@ function Todos() {
           <Text w="80%" borderWidth={1}>
             {contents}
           </Text>
+          <Text w="80%" borderWidth={1}>
+            {id}
+          </Text>
 
-          <Button onClick={(e) => deleteTodo({ variables: { id } })}>
-            delete
+          <Button
+            onClick={(e) => {
+              console.log(id);
+              deleteTodo({ variables: { id } });
+            }}>
+            <Icon name="delete" />
           </Button>
-          <Button onClick={onOpen}>Edit</Button>
+          <Button
+            onClick={() => {
+              onOpen();
+              console.log(id);
+              setUpdateId(id);
+            }}>
+            <Icon name="edit" />
+          </Button>
         </Flex>
+        {/* <UpdateTodo /> */}
         <Modal
           initialFocusRef={initialRef}
           finalFocusRef={finalRef}
@@ -84,7 +100,10 @@ function Todos() {
                 contents="submit"
                 onClick={(e) => {
                   e.preventDefault();
-                  updateTodo({ variables: { id, contents: input.value } });
+                  updateTodo({
+                    variables: { id: updateId, contents: input.value },
+                  });
+                  console.log(updateId);
 
                   input.value = "";
                 }}>
